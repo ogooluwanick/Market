@@ -1,0 +1,18 @@
+.App {
+  background-color: var(--primary-color);
+  font-family: var(--font-base);
+}
+
+.app__container {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.app__flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
