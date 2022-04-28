@@ -1,0 +1,21 @@
+.alert{
+    padding: 1rem;
+    border: 0.1rem solid transparent;
+    border: 0.5rem;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.alert-success{
+    color:snow;
+    background-color:#8dc3e1 ;
+}
+
+.alert-danger{
+    color: snow;
+    background-color: #fc8989;
+
+}
+
