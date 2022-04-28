@@ -3,7 +3,11 @@ import mongoose from "mongoose";
 import cors from "cors"
 import bodyParser from "body-parser"
 import dotenv from "dotenv"
-import { products } from "./data/products.js";
+
+import productRouter from "./routes/productRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+
 
 
 
@@ -27,20 +31,11 @@ app.use(
 mongoose.connect(process.env.MONGODB_URL)
 
 
-app.get('/products',(req,res)=>{
-        res.json(products);
-    });
-
-app.get('/products/:id',(req,res)=>{
-        const product=  products.find(p=>p._id===req.params.id)
-        res.json(product);
-});
 
 
-
-// app.use("/posts",postRouter)
-// app.use("/users",userRouter)
-
+// Reducer calls
+app.use('/products', productRouter);
+app.use("/users",userRouter)
 
 
 
@@ -49,9 +44,15 @@ app.get('/', (req,res)=>{
     res.send('Server is ready')
 });
 
-app.get((err,req,res,next)=>{
-    res.satus(500).send({message:err.message}) 
-})
+
+app.use(notFound)
+
+app.use(errorHandler)
+
+
+// app.get((err,req,res,next)=>{
+//     res.satus(500).send({message:err.message}) 
+// })
 
 const port= process.env.PORT||3000;
 

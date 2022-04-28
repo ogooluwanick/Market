@@ -13,6 +13,9 @@ node_modules/
 # production
 /build
 
+# hiddenFiles
+/server/seeder.js
+
 # misc
 .DS_Store
 .env
