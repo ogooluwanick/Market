@@ -1,0 +1,28 @@
+h4{
+        color:var(--gray-color) !important;
+        
+}
+
+.checkoutBtn{
+        transition: all 0.3s ease-in-out;
+
+        svg{
+                fill: var(--primary-color);
+        }
+
+
+        &:hover, &:active {
+                background-color: var(--primary-color);
+                border: 5px solid var(--black-color);
+                color: var(--black-color) !important ;
+                font-size: 16px;
+
+                svg{
+                        fill: var(--black-color) ;
+                }
+         }
+}
+
+.cartDataBox{
+        margin-top: .5vh;
+}

@@ -3,20 +3,22 @@
   font-family: var(--font-base);
 }
 
+h1,h2,h3,h4,h5,h6{
+        font-weight: 400;
+}
+
 main{
         min-height: 100vh;
         background-color: var(--white-color);
  
 
         position: relative;
-        padding: 6rem 2rem .5rem;
+        padding: 12vh 2rem .5rem;
 
         background: url("./assets/home_whtBG.jpg");
         background-size: cover;
         background-repeat: repeat;
         background-position:center;
-  
-        
 }
 
 .app__container {

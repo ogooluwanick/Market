@@ -18,19 +18,12 @@
 }
 .app__navbar-brand{
         display: flex;
-
+        transition: all 0.7s ease-in-out;
 
         img{
-                width: 60px;
+                width: 55px;
                 height: 50px;
-        
                 transition: all 0.7s ease-in-out;
-        
-                &:hover{
-                        /*rotate logo*/
-                        transform: rotate(360deg);
-                        width: 100px;
-                }
         
                 @media screen and (min-width: 2000px) {
                         width: 100px;
@@ -43,5 +36,13 @@
                 }
         
         }
+
+        &:hover,&:active{
+               img{
+                        transform: rotate(720deg);                                                                       /*rotate logo*/
+                }
+        }
+
+        
 
 }

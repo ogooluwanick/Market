@@ -13,7 +13,7 @@ function NavBar() {
                 <Container className='app__navbar-container      '>
                         <LinkContainer to="/">
                                 <Navbar.Brand className='app__navbar-brand     app__flex'>
-                                        <img src={images.sitelogo} alt="market-logo" className='app__navbar-logo' />
+                                        <img src={images.sitelogo} alt="market-logo"  />
                                         <span>Market</span> 
                                 </Navbar.Brand>
                         </LinkContainer>

@@ -1,11 +1,13 @@
 import  axios  from "axios";
 import { PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from "../constants/constants";
 
+const baseURL="http://localhost:3005/products"
+
 export const listProducts =()=> async(dispatch) =>{
         dispatch({type:PRODUCT_LIST_REQUEST})
 
         try {
-                const {data}= await axios.get("http://localhost:3005/products/")
+                const {data}= await axios.get(`${baseURL}/`)
                 dispatch({type:PRODUCT_LIST_SUCCESS, payload: data})
         } catch (error) {
                 dispatch({
@@ -24,7 +26,7 @@ export const detailsProduct =(productsID)=> async (dispatch) => {
         });
     
         try{
-            const {data} = await axios.get(`http://localhost:3005/products/${productsID}`);
+            const {data} = await axios.get(`${baseURL}/${productsID}`);
             dispatch({type: PRODUCT_DETAILS_SUCCESS, payload: data});
         }
         catch(error){
