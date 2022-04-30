@@ -15,6 +15,13 @@
 
 .app__navbar-links{
         margin-left: auto;
+        background-color: rgba(237,242,248, 1);
+        padding: 1rem;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 0 0 20px 20px;
+        
 }
 .app__navbar-brand{
         display: flex;

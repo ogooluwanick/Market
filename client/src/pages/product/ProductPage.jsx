@@ -1,9 +1,13 @@
 import React from 'react'
 import { useEffect,useState } from 'react'
-import { Col, Image,ListGroup,Card,Button, Row,Form } from 'react-bootstrap'
+import { Col, Image,ListGroup,Card,Button, Row,Form, Modal } from 'react-bootstrap'
 import {Link, useNavigate, useParams} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import {detailsProduct} from "../../actions/productActions"
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+
+
 
 
 
@@ -12,12 +16,23 @@ import "./ProductPage.scss"
 import LoadingBox from '../../components/loadingbox/LoadingBox';
 import MessageBox from '../../components/messagebox/MessageBox';
 
+
+
+
+ 
+
 const ProductPage = () => {
         const {id: productsID}=useParams()
         const dispatch=useDispatch()
         const nav=useNavigate()
+        
+        const [modalShow, setModalShow] =useState(false);
 
         const {product,loading ,error  }=useSelector((state)=>state.productDetails)
+       
+
+        const imagesModal=  product?.reviews?.map((img)=>({original:img, thumbnail:img    }))   //mapping array from api to local array for modal gallery
+        
 
         const [qty, setQty] = useState(1)
 
@@ -25,6 +40,30 @@ const ProductPage = () => {
                 nav(`/cart/${productsID}?qty=${qty}`)
 
         }
+
+
+        const ImgSliderModal=(props)=> {
+                return (
+                  <Modal
+                    {...props}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title id="contained-modal-title-vcenter">
+                        <span>{product.name}  gallery</span>
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ImageGallery items={imagesModal} />
+                    </Modal.Body>
+                  </Modal>
+                );
+              }
+
+
+
 
         useEffect(() => {
           dispatch(detailsProduct(productsID))
@@ -44,7 +83,7 @@ const ProductPage = () => {
                         (
                                 <Row>
                                         <Col md={6}>
-                                                <Image src={product?.image} alt={product?.name} fluid/>  
+                                                <Image src={product?.image} alt={product?.name} fluid  className='app__ProductPage-Img' onClick={()=>setModalShow(true)}/>  
                                         </Col>
                                         <Col md={3}>
                                                 <ListGroup variant='flush'>
@@ -115,6 +154,11 @@ const ProductPage = () => {
                                                         </ListGroup>
                                                 </Card>
                                         </Col>
+
+                                        <ImgSliderModal
+                                                show={modalShow}
+                                                onHide={() => setModalShow(false)}
+                                        />
 
                                 </Row>
                         )
