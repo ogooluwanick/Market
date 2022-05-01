@@ -9,6 +9,7 @@ import Footer from './components/footer/Footer';
 import Home from './pages/home/Home';
 import ProductPage from './pages/product/ProductPage';
 import CartPage from './pages/cart/CartPage';
+import Login from './pages/login/Login';
 
 
 function App() {
@@ -25,6 +26,11 @@ function App() {
 
                                        <Route path={'/cart/'}  element={ <CartPage/>} /> 
                                        <Route path={'/cart/:id'}  element={ <CartPage/>} /> 
+
+                                       <Route path={'/login'}  element={ <Login/>} /> 
+
+
+
 
                                 </Routes>
                         </Container>

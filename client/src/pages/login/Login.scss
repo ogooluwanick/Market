@@ -1,0 +1,53 @@
+.loginFormHeader-whitePage{
+        border-radius: 0 50px 0 50px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        margin: 3vh 0;
+        padding: 0vh 5vh;
+        width: 90vh;
+        
+        transition: all .3s ease-in-out !important;
+}
+
+.loginFormHeader{
+        margin-top: 5vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h1{
+                font-weight: 300;
+        }
+
+        div{
+                border-radius: 50%;
+                background:#f82424;
+                padding: 1rem;
+                margin-bottom: .3rem;
+
+                svg{
+                        font-size: 10rem;
+                        fill: snow;
+                }
+        }
+}
+
+.loginFormHeader-nameSTY{
+        width: 35vh;
+}
+
+.loginFormHeader-signinBtn{
+        border-radius: 30px;
+        transition: all 0.3 ease-in-out;
+        height: 6.5vh;
+
+        &:hover,&:active{
+                background-color: var(--lightgray-color);      
+                color:   var(--black-color);            
+                border: 2px solid var(--black-color);      
+                // width: ;
+         }
+        
+}
+
+

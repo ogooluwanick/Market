@@ -22,7 +22,10 @@ const userRouter= express.Router();
 // @route post /users/login
 // @access Public
 userRouter.post('/login',expressAsyncHandler(async(req,res)=>{
-        const {email,password} =req.body
+        let {email,password} =req.body
+        email=String(email).toLowerCase()
+        password=String(password)
+
         const user= await User.findOne({email}) 
         if(user){
             if(bcrypt.compareSync(password, user.password)){
@@ -72,7 +75,9 @@ userRouter.get('/profile',isAuth,expressAsyncHandler(async(req,res)=>{
 // @route post /users/register
 // @access Public
 userRouter.post('/register',expressAsyncHandler(async(req,res)=>{
-        const {name,password,email,}= req.body
+        const {firstName,lastName,password,email,}= req.body
+        let name = firstName + " " + lastName
+        console.log("req.body",req.body)
         const userExists= await User.findOne({email})
 
         if (userExists){
