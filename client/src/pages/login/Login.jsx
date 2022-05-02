@@ -101,9 +101,6 @@ const Login = () => {
                                 <Form.Group controlId='firstname'  className='loginFormHeader-nameSTY'>
                                         <Form.Label>First Name</Form.Label>
                                         <Form.Control name="firstName" type='text' placeholder='First Name...'  onChange={handleChange} required></Form.Control>
-                                        <div class="valid-feedback">
-                                                 Looks good!
-                                        </div>
                                 </Form.Group>
                                 <Form.Group controlId='lastname' className='loginFormHeader-nameSTY'>
                                         <Form.Label>Last Name</Form.Label>

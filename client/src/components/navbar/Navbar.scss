@@ -53,3 +53,18 @@
         
 
 }
+
+.navbar_userInfo,.app__navbar-links,#username{
+        display: flex;
+        justify-content: center;
+        align-items: center;        
+        height: inherit;
+        border: none;
+}
+
+.app__navbar-links{
+        @media screen  and (max-width: 991px){
+                align-items: flex-start;     
+
+        }
+}

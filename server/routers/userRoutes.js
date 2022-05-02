@@ -76,17 +76,18 @@ userRouter.get('/profile',isAuth,expressAsyncHandler(async(req,res)=>{
 // @access Public
 userRouter.post('/register',expressAsyncHandler(async(req,res)=>{
         const {firstName,lastName,password,email,}= req.body
-        let name = firstName + " " + lastName
-        console.log("req.body",req.body)
+        let name = String(firstName + " " + lastName)
+        
+        
         const userExists= await User.findOne({email})
-
+        
         if (userExists){
                 res.status(400)
                 throw new Error("User Already Exist")
         }
         else {
-
-                const user= new User({name:name, email:email, password:bcrypt.hashSync(password,10)})
+                console.log(email)
+                const user= new User({name:String(name), email:String(email), password:bcrypt.hashSync(String(password),10)})
                 if(user){
                         const createdUser= await user.save();
                         res.send({
