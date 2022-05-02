@@ -10,6 +10,7 @@ import Home from './pages/home/Home';
 import ProductPage from './pages/product/ProductPage';
 import CartPage from './pages/cart/CartPage';
 import Login from './pages/login/Login';
+import ProfilePage from './pages/profile/ProfilePage';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                                        <Route path={'/cart/:id'}  element={ <CartPage/>} /> 
 
                                        <Route path={'/login'}  element={ <Login/>} /> 
+                                       <Route path={'/profile'}  element={ <ProfilePage/>} /> 
 
 
 

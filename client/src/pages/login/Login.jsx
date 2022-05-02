@@ -68,8 +68,9 @@ const Login = () => {
                 dispatch(signinUsers(formData,nav, redirect))
         }
         else{
-                if(String(formData.password).length <8) { setNameError('Passwords is too weak! 😏 ')}
-                if(String(formData.password) !== String(formData.confirmPassword)) return setNameError('Passwords do not match! 😏')
+                if(String(formData.password).length <= 0) { setNameError('Password\'s is too weak! 😏 ')}
+                if(String(formData.password).length <8) { setNameError('Password\'s  too weak! 😏 ')}
+                if(String(formData.password) !== String(formData.confirmPassword)) return setNameError('Password\'s do not match! 😏')
                 
                 dispatch(signupUsers(formData,nav, redirect))
         }

@@ -20,6 +20,8 @@ function NavBar() {
                 dispatch(signoutUsers(nav))
         }
 
+    
+
   return (
     <header>
             <Navbar  expand="lg" collapseOnSelect className='app__navbar' >
@@ -45,7 +47,7 @@ function NavBar() {
                                                         <NavDropdown title={
                                                                         <div className='navbar_userInfo'>
                                                                                  <span>{userInfo.name.split(" ")[0]}</span>
-                                                                                <img src={userInfo.avater} alt="user avater"  className='rounded-circle shadow-4'  style={{width: "5vh",marginLeft:".6vh"}} />  
+                                                                                <img src={userInfo.avater} alt="user avater"  className='rounded-circle shadow-4'  style={{width: "5vh",height: "5vh",marginLeft:".6vh",objectFit:"cover"}} />  
                                                                          </div>    
                                                                 } id='username'>
                                                                 <LinkContainer to='/profile'>
