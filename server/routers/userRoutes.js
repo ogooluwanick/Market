@@ -65,6 +65,38 @@ userRouter.get('/profile',isAuth,expressAsyncHandler(async(req,res)=>{
                 res.status(404)
                 throw new Error("User not Found")
         }
+}));
+
+userRouter.put('/updateprofile',isAuth,expressAsyncHandler(async(req,res)=>{
+        const {firstName,lastName,email,password,avater}= req.body
+        let name = String(firstName + " " + lastName)
+
+        const user= await User.findById(req.user._id) 
+
+        if (user){
+                user.name=name || user.name                             //if nothing comes from client put what was there b4 back
+                user.email=email || user.email
+                user.avater=avater || user.avater
+
+                if(password){
+                        user.password=bcrypt.hashSync(String(password),10)
+                }
+
+                const updatedUser=await user.save()
+
+                res.send({
+                        _id:updatedUser._id,
+                        name:updatedUser.name,
+                        email:updatedUser.email,
+                        isAdmin:updatedUser.isAdmin,
+                        avater:updatedUser.avater,
+                        token:    generateToken(updatedUser._id) 
+                    });
+        }
+        else{
+                res.status(404)
+                throw new Error("User not Found")
+        }
         
        
 
@@ -86,7 +118,6 @@ userRouter.post('/register',expressAsyncHandler(async(req,res)=>{
                 throw new Error("User Already Exist")
         }
         else {
-                console.log(email)
                 const user= new User({name:String(name), email:String(email), password:bcrypt.hashSync(String(password),10)})
                 if(user){
                         const createdUser= await user.save();
