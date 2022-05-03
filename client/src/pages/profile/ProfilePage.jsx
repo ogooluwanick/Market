@@ -50,9 +50,9 @@ const ProfilePage = () => {
         const submitHandler=(e)=>{
                 e.preventDefault()
                 setNameError(null)
-                
-                if((String(formData.password).length > 0)){
-                        if(String(formData.password).length <8) { setNameError('Password\'s  too weak! 😏 ')}
+
+                if( String(formData.password).length > 0){
+                        if(String(formData.password).length < 8) return setNameError('Password\'s  too weak! 😏 ')
                         if(String(formData.password) !== String(formData.confirmPassword)) return setNameError('Password\'s do not match! 😏')
                 }
                 
@@ -87,9 +87,22 @@ const ProfilePage = () => {
   return (
     <Row>
             <Col md={4} className={"userprofileUpdateForm "} >
-                <div  className='loginFormHeader head-text'>
-                        <h1 ><span>{user?.name?.split(" ")[0]}'s </span>Profile</h1>
-                </div>
+                {
+                        loadinguser? 
+                        (
+                                <div  className='loginFormHeader head-text'>
+                                        <h1 ><span>User </span>Profile</h1>
+                                </div>
+                        )
+                        :
+                        (
+                                <div  className='loginFormHeader head-text'>
+                                        <h1 ><span>{user?.name?.split(" ")[0]}'s </span>Profile</h1>
+                                </div>
+                        )
+
+                }
+                
 
                 {(error || erroruser)&&<MessageBox>{error} </MessageBox>}
                 {nameError&&<MessageBox>{nameError} </MessageBox>}
@@ -99,7 +112,7 @@ const ProfilePage = () => {
                 <Form onSubmit={submitHandler} className={" "} >
                         <div className="avaterUploadContainer app__flex">
                                 <div className={"avatar-wrapper  "}  >
-                                        <img src={user?.avater} alt="user avater" className="profile-pic" />
+                                        <img src={loadinguser?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS03toaZ810yqxEfpLvHxNrpSllc4CevOTfXC1fnP-QbQ&s":user?.avater} alt="user avater" className="profile-pic" />
                                         <div className="upload-button">
                                                 <i className="fa fa-arrow-circle-up" aria-hidden="true" ></i>
                                         </div>
@@ -109,6 +122,7 @@ const ProfilePage = () => {
                                         <FileBase className=" FileBaseUpdate"  type="file" multiple={false} onDone={({base64})=>setFormData({...formData,avater:base64})}/>                          
                                 </div>
                         </div>
+
                         <div style={{display:"flex",justifyContent:"space-between"}} className="my-2">
                                 <Form.Group controlId='firstname'  className='mx-1'>
                                         <Form.Label>First Name</Form.Label>
@@ -152,10 +166,10 @@ const ProfilePage = () => {
                                 </InputGroup>
                         </Form.Group>
                                         
-                        <div className='d-flex justify-content-center mt-3'>
+                        <div className='d-flex justify-content-center my-3'>
                                         <Button className={"loginFormHeader-signinBtn"} type="submit" color='primary'   style={{width:"80%"}} >
                                         {
-                                                loading || loadinguser?
+                                                loading?
                                                 <LoadingBox  size={30} style={{backgroundColor:"pink"}}></LoadingBox>
                                                 :
                                                 ("Update")

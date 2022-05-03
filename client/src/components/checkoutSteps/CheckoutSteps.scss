@@ -1,0 +1,31 @@
+.checkout-steps{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+
+}
+
+.checkout-steps>div{
+        
+        border-top: 0.3rem solid grey;
+        color: grey;
+        flex: 1;
+        padding: 1rem;
+        font-weight: 600;
+        
+}
+
+.breadcrums-text{
+      cursor: not-allowed;  
+}
+
+.checkout-steps>div.active{
+  border-top-color: #2ea4e5;
+  color: #2ea4e5;
+}
+
+.checkoutLinks{
+  color: inherit;
+
+}

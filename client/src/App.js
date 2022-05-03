@@ -11,6 +11,10 @@ import ProductPage from './pages/product/ProductPage';
 import CartPage from './pages/cart/CartPage';
 import Login from './pages/login/Login';
 import ProfilePage from './pages/profile/ProfilePage';
+import ShippingPage from './pages/shipping/ShippingPage';
+import PaymentMethod from './pages/paymentMethod/PaymentMethod';
+import PlaceOrder from './pages/placeOrder/PlaceOrder';
+
 
 
 function App() {
@@ -27,6 +31,11 @@ function App() {
 
                                        <Route path={'/cart/'}  element={ <CartPage/>} /> 
                                        <Route path={'/cart/:id'}  element={ <CartPage/>} /> 
+                                       <Route path={'/shipping'}  element={ <ShippingPage/>} /> 
+                                       <Route path={'/payment'}  element={ <PaymentMethod/>} /> 
+                                       <Route path={'/placeorder'}  element={ <PlaceOrder/>} /> 
+
+                                       
 
                                        <Route path={'/login'}  element={ <Login/>} /> 
                                        <Route path={'/profile'}  element={ <ProfilePage/>} /> 

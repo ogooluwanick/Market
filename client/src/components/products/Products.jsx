@@ -10,7 +10,7 @@ const Products = ({product}) => {
   return (
     <Card className="my-3 p-3 rounded productCard" >
             <Link to={`/products/${product._id}`} >
-                    <Card.Img src={product.image} variant="top"  className={"productCard-img"}/>
+                    <Card.Img src={product.image} variant="top"  className={"productCard-img rounded"}/>
              </Link>
             <Card.Body className="productCardBody">
                 <Link to={`/products/${product._id}`}   className="app__rm-textDecor productCardTitle  ">    
