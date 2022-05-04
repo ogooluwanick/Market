@@ -91,8 +91,8 @@ const Login = () => {
                 <h1 >{isSignup?"Sign Up":"Sign In"}</h1>
             </div>
 
-            {error&&<MessageBox>{error} </MessageBox>}
-            {nameError&&<MessageBox>{nameError} </MessageBox>}
+            {error&&<MessageBox variant='danger'>{error} </MessageBox>}
+            {nameError&&<MessageBox variant='danger'>{nameError} </MessageBox>}
             
             
             <Form onSubmit={submitHandler} >

@@ -104,8 +104,8 @@ const ProfilePage = () => {
                 }
                 
 
-                {(error || erroruser)&&<MessageBox>{error} </MessageBox>}
-                {nameError&&<MessageBox>{nameError} </MessageBox>}
+                {(error || erroruser)&&<MessageBox variant='danger'>{error} </MessageBox>}
+                {nameError&&<MessageBox variant='danger'>{nameError} </MessageBox>}
                 {success&&<MessageBox>Profile Updated</MessageBox>}
                 
                 

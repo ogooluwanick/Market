@@ -14,6 +14,7 @@ import ProfilePage from './pages/profile/ProfilePage';
 import ShippingPage from './pages/shipping/ShippingPage';
 import PaymentMethod from './pages/paymentMethod/PaymentMethod';
 import PlaceOrder from './pages/placeOrder/PlaceOrder';
+import OrderDetailsPage from './pages/orderDetails/OrderDetailsPage';
 
 
 
@@ -34,6 +35,7 @@ function App() {
                                        <Route path={'/shipping'}  element={ <ShippingPage/>} /> 
                                        <Route path={'/payment'}  element={ <PaymentMethod/>} /> 
                                        <Route path={'/placeorder'}  element={ <PlaceOrder/>} /> 
+                                       <Route path={'/order/:id'}  element={ <OrderDetailsPage/>} /> 
 
                                        
 
