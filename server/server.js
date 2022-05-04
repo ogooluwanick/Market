@@ -4,9 +4,10 @@ import cors from "cors"
 import bodyParser from "body-parser"
 import dotenv from "dotenv"
 
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import productRouter from "./routers/productRoutes.js";
 import userRouter from "./routers/userRoutes.js";
-import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+import orderRouter from "./routers/orderRoutes.js";
 
 
 
@@ -36,6 +37,7 @@ mongoose.connect(process.env.MONGODB_URL)
 // router calls
 app.use('/users',userRouter)
 app.use('/products', productRouter);
+app.use('/orders', orderRouter);
 
 
 
