@@ -39,7 +39,7 @@ app.use('/users',userRouter)
 app.use('/products', productRouter);
 app.use('/orders', orderRouter);
 
-
+app.get("/api/3rdPartyPayment/paypal", (req,res)=> res.send(process.env.PAYPAL_CLIENT_ID))
 
 
 

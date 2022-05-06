@@ -9,9 +9,14 @@ const orderRouter= express.Router();
 // @desc  create order
 // @route post /orders
 // @access private
+
+
+
+
+
+ 
 orderRouter.post('/',isAuth,expressAsyncHandler(async(req,res)=>{
         const {orderItems,shippingAddress,paymentMethod,itemsPrice,taxPrice,shippingPrice,totalPrice}= req.body
-        console.log(itemsPrice)
         if (orderItems && orderItems.length ===0){
                 res.status(400)
                 throw new Error("No order items")
@@ -23,6 +28,23 @@ orderRouter.post('/',isAuth,expressAsyncHandler(async(req,res)=>{
         }
  }));
 
+
+// @desc  Get logged in users all time orders
+// @route get /orders/myorders
+// @access private
+orderRouter.get('/myorders',isAuth,expressAsyncHandler(async(req,res)=>{
+        const userId= req.user._id
+        const orders= await Order.find({user:userId})
+        
+        if(orders){
+                res.json(orders);
+        }
+        else{
+                res.status(404)
+                throw new Error("Orders Not Found!")
+        }   
+
+}))
 
 
 // @desc  get single order by ID
@@ -41,25 +63,41 @@ orderRouter.get('/:id',isAuth,expressAsyncHandler(async(req,res)=>{
         }        
 }));
 
+
+
+
+
 // @desc  update order to paid  by ID
 // @route get /orders/:id/pay
 // @access private
 orderRouter.put('/:id/pay',isAuth,expressAsyncHandler(async(req,res)=>{
-        const {id }= req.params
+        const {id}= req.params
         const paymentData= req.body
-        const order= await Order.findById(id)
-        
+        const order= await Order.findById(String(id))
         if(order){
                 order.isPaid= true
                 order.paidAt= Date.now()
-                order.paymentResult= {                                                                          //data being sent in from paypal
-                        id:paymentData.id,                                                              
-                        status:paymentData.status,
-                        update_time:paymentData.update_time,
-                        email_address:paymentData.email_address
+                if (order.paymentMethod== "Paypal"){
+                        order.paymentResult= {                                                                          //data being sent in from paypal
+                                id:paymentData.id,                                                              
+                                status:paymentData.status,
+                                update_time:paymentData.update_time,
+                                email_address:paymentData.email_address
+                        }
                 }
-                const updatedOrder=await order.save()
+                else if(order.paymentMethod== "Paystack"){
+                        order.paymentResult= {                                                                          //data being sent in from paystack
+                                reference:paymentData.reference,                                                              
+                                status:paymentData.status,
+                                transaction:paymentData.transaction,
+                                message:paymentData.message,
+                        }
+                }
+                else{
+                        console.log("fix later for transfers")
+                }
 
+                const updatedOrder=await order.save()
                 res.json(updatedOrder);
         }
         else{
@@ -67,5 +105,7 @@ orderRouter.put('/:id/pay',isAuth,expressAsyncHandler(async(req,res)=>{
                 throw new Error("Order Not Found!")
         }        
 }));
+
+
 
 export default orderRouter;
