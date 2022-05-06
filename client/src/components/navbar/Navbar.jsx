@@ -24,8 +24,8 @@ function NavBar() {
 
   return (
     <header>
-            <Navbar  expand="lg" collapseOnSelect className='app__navbar' >
-                <Container className='app__navbar-container      '>
+            <Navbar  expand="lg" collapseOnSelect className='app__navbar ' >
+                <Container className='app__navbar-container  '>
                         <LinkContainer to="/">
                                 <Navbar.Brand className='app__navbar-brand     app__flex'>
                                         <img src={images.sitelogo} alt="market-logo"  />
@@ -44,10 +44,10 @@ function NavBar() {
                                         {
                                                 userInfo?
                                                 (
-                                                        <NavDropdown title={
+                                                        <NavDropdown  title={
                                                                         <div className='navbar_userInfo'>
                                                                                  <span>{userInfo.name.split(" ")[0]}</span>
-                                                                                <img src={userInfo.avater} alt="user avater"  className='rounded-circle shadow-4'  style={{width: "5vh",height: "5vh",marginLeft:".6vh",objectFit:"cover"}} />  
+                                                                                <img src={userInfo.avater} alt="user avater"  className='rounded-circle shadow-4'  style={{width: "6vh",height: "6vh",marginLeft:".6vh",objectFit:"cover"}} />  
                                                                          </div>    
                                                                 } id='username'>
                                                                 <LinkContainer to='/profile'>

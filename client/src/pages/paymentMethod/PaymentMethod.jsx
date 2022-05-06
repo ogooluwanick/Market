@@ -52,7 +52,7 @@ const PaymentMethod = () => {
                                                 <Col className='mx-4'>
                                                         <Form.Check className='my-2' type='radio' label="PayPal or Credit Card" id="PayPal" name="paymentMedthod" value="PayPal" checked onChange={(e)=>setPaymentMethod(e.target.value)}></Form.Check>
                                                         <Form.Check className='my-2' type='radio' label="Transfers" id="Transfers" name="paymentMedthod" value="Transfers"  onChange={(e)=>setPaymentMethod(e.target.value)}></Form.Check>
-                                                        <Form.Check className='my-2' type='radio' label="Paystack" id="Paystack" name="paymentMedthod" value="Paystack"  onChange={(e)=>setPaymentMethod(e.target.value)} disabled></Form.Check>
+                                                        <Form.Check className='my-2' type='radio' label="Paystack" id="Paystack" name="paymentMedthod" value="Paystack"  onChange={(e)=>setPaymentMethod(e.target.value)} ></Form.Check>
                                                 </Col>
                                                 </Form.Group>
                                                 <Button type='submit' variant="primary" className='checkoutBtn rounded my-2 shippingBtn' >

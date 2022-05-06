@@ -1,14 +1,19 @@
 import React ,{ useEffect,useState }from 'react'
-import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
+import { Button, Col, Form, InputGroup, Row, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import FileBase from 'react-file-base64';
+import moment from "moment"
+import { LinkContainer} from 'react-router-bootstrap'
+
+
 
 import "./ProfilePage.scss"
 import { detailsUsers, updateProfileUsers } from '../../actions/userActions'
 import LoadingBox from '../../components/loadingbox/LoadingBox'
 import MessageBox from '../../components/messagebox/MessageBox'
 import { USER_UPDATE_RESET } from '../../constants/constants';
+import { displayMyOrders } from '../../actions/orderActions';
 
 
 const initialState= {
@@ -30,6 +35,7 @@ const ProfilePage = () => {
 
 
         const {user ,loading:loadinguser,erroruser } = useSelector(state=>state.userDetails)
+        const {orders ,loading:ordersLoading,error:ordersErrors } = useSelector(state=>state.orderMyList)
         const {userInfo } = useSelector(state=>state.userSignin)
         const {success,loading,error } = useSelector(state=>state.userUpdateProfile)
         
@@ -72,6 +78,8 @@ const ProfilePage = () => {
                         if(!user || !user?.name || success){
                                 dispatch({type:USER_UPDATE_RESET})
                                 dispatch(detailsUsers("profile"))
+                                dispatch(displayMyOrders())
+
                         }
                         else{
                                 setFormData({...formData, 
@@ -85,7 +93,7 @@ const ProfilePage = () => {
                 // eslint-disable-next-line
               }, [userInfo,nav,user,dispatch,success])
   return (
-    <Row>
+    <Row className={"ProfilepageRow "} >
             <Col md={4} className={"userprofileUpdateForm "} >
                 {
                         loadinguser? 
@@ -178,8 +186,45 @@ const ProfilePage = () => {
                         </div>
                 </Form>
             </Col>
-            <Col md={9}>
-            
+            <Col  className='mx-2 userOrdersList' md={7}>
+                <h2>My Orders</h2>
+                {
+                        ordersLoading?<LoadingBox/>
+                        :
+                        ordersErrors?<MessageBox variant="danger">{ordersErrors}</MessageBox>
+                        :
+                        (
+                                <Table striped bordered hover responsive className="table-sm ">
+                                        <thead>
+                                                <tr>
+                                                        <th>ID</th>
+                                                        <th>DATE</th>
+                                                        <th>TOTAL</th>
+                                                        <th>PAID</th>
+                                                        <th>DELIVERED</th>
+                                                        <th></th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                                {orders.map((item,index)=>(
+                                                        <tr key={index}>
+                                                                <td>{item._id}</td>
+                                                                <td>{ moment(item.createdAt).format('MMMM d, YYYY')}</td>
+                                                                <td>₦{item.totalPrice}</td>
+                                                                <td>{item.isPaid? moment(item.paidAt).format('Do [of] MMMM, YYYY [at] h:mma') :  (<div className='app__flex'><svg  style={{fill:"red"}} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 3.752l-4.423-3.752-7.771 9.039-7.647-9.008-4.159 4.278c2.285 2.885 5.284 5.903 8.362 8.708l-8.165 9.447 1.343 1.487c1.978-1.335 5.981-4.373 10.205-7.958 4.304 3.67 8.306 6.663 10.229 8.006l1.449-1.278-8.254-9.724c3.287-2.973 6.584-6.354 8.831-9.245z"/></svg></div> )}</td>
+                                                                <td>{item.isDelivered? moment(item.isDelivered).format('Do [of] MMMM, YYYY [at] h:mma') : (<div className=' app__flex'><svg  style={{fill:"red"}} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 3.752l-4.423-3.752-7.771 9.039-7.647-9.008-4.159 4.278c2.285 2.885 5.284 5.903 8.362 8.708l-8.165 9.447 1.343 1.487c1.978-1.335 5.981-4.373 10.205-7.958 4.304 3.67 8.306 6.663 10.229 8.006l1.449-1.278-8.254-9.724c3.287-2.973 6.584-6.354 8.831-9.245z"/></svg></div>)}</td>
+                                                                <td>
+                                                                        <LinkContainer to={`/order/${item._id}`}>
+                                                                                <Button className='btn-sm' variant='light' >Details</Button>
+                                                                        </LinkContainer>
+                                                                </td>
+                                                        </tr> 
+                                                ))}
+                                        </tbody>
+
+                                </Table>
+                        )
+                }
             </Col>
 
     </Row>
