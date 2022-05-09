@@ -40,9 +40,10 @@ const UserlistPage = () => {
                 <Toast show={notification} onClose={toggleNotification} bg="secondary" >
                         <Toast.Header>
                         <img
-                        src="holder.js/20x20?text=%20"
+                        src={userInfo.avater}
                         className="rounded me-2"
                         alt=""
+                        style={{width: "6vh",height: "6vh",marginLeft:".6vh",objectFit:"cover"}}
                         />
                         <strong className="me-auto">Admin {userInfo.name.split(" ")[0]}</strong>
                         <small>{moment(new Date()).fromNow() }</small>

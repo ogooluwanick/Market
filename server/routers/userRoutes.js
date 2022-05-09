@@ -11,6 +11,27 @@ const userRouter= express.Router();
 
 
 
+// @desc  Get user profile
+// @route post /users/profile
+// @access Private
+userRouter.get('/profile',isAuth,expressAsyncHandler(async(req,res)=>{
+        const user= await User.findById(req.user._id) 
+        if (user){
+                res.send({
+                        _id:user._id,
+                        name:user.name,
+                        email:user.email,
+                        isAdmin:user.isAdmin,
+                        avater:user.avater,
+                        
+                })
+        }
+        else{
+                res.status(404)
+                throw new Error("User not Found")
+        }
+}));
+
 // @desc  display all users for admins 
 // @route get /users/listusers
 // @access private/admin
@@ -116,26 +137,7 @@ userRouter.post('/login',expressAsyncHandler(async(req,res)=>{
 
 }));
 
-// @desc  Get user profile
-// @route post /users/profile
-// @access Private
-userRouter.get('/profile',isAuth,expressAsyncHandler(async(req,res)=>{
-        const user= await User.findById(req.user._id) 
-        if (user){
-                res.send({
-                        _id:user._id,
-                        name:user.name,
-                        email:user.email,
-                        isAdmin:user.isAdmin,
-                        avater:user.avater,
-                        
-                })
-        }
-        else{
-                res.status(404)
-                throw new Error("User not Found")
-        }
-}));
+
 
 // @desc  update a users profile
 // @route put /users/updateprofile

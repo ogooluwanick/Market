@@ -1,8 +1,10 @@
 import React ,{ useEffect,useState }from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Form, Toast, ToastContainer } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import FileBase from 'react-file-base64';
+import moment from "moment"
+
 
 
 import "./UserEditPage.scss"
@@ -27,11 +29,12 @@ const UserEditPage = () => {
         const dispatch=useDispatch()
         const {id}= useParams()
 
-
+        const [notification, setnotification] = useState(false);
+        const toggleNotification = () => setnotification((notification)=>!notification);
 
         const {user ,loading:loadinguser,error:erroruser } = useSelector(state=>state.userDetails)
         const {success,loading:updateLoading,error:updateError } = useSelector(state=>state.adminUserUpdate)
-        // const {userInfo } = useSelector(state=>state.userSignin)
+        const {userInfo } = useSelector(state=>state.userSignin)
 
 
         const handleChange=(e)=>{
@@ -51,7 +54,28 @@ const UserEditPage = () => {
 
                                                                 },id))
         }
-        console.log("user",formData)
+
+        const NotificationToast =(props)=>{
+                return(
+
+                <ToastContainer position="top-end" className="userListNofifications">
+                <Toast show={notification} onClose={toggleNotification} bg="secondary" >
+                        <Toast.Header>
+                        <img
+                        src={userInfo.avater}
+                        className="rounded me-2"
+                        alt=""
+                        style={{width: "6vh",height: "6vh",marginLeft:".6vh",objectFit:"cover"}}
+                        />
+                        <strong className="me-auto">Admin {userInfo.name.split(" ")[0]}</strong>
+                        <small>{moment(new Date()).fromNow() }</small>
+                        </Toast.Header>
+                        <Toast.Body>{success ? "User Updated":updateError}</Toast.Body>
+                </Toast>
+                </ToastContainer>
+                )
+        }
+         console.log(user.avater)
 
         useEffect(() => {
                 if(success){
@@ -79,6 +103,7 @@ const UserEditPage = () => {
   return (
     < >
                 <Link to={"/admin/users"} className="btn btn-outline-primary my-3 rounded"><i className="fa-solid fa-arrow-left"/>    Go Back</Link>
+                <NotificationToast/>
                 <FormContainer  className={"adminUpdateUserForm "} >
                         <h1 className='head-text'>Edit<span> User</span></h1>    
                         {
@@ -88,15 +113,12 @@ const UserEditPage = () => {
                                 :
                                 (
                                         <Form onSubmit={submitHandler} className={" "} >
-                                                {/* {(error || erroruser)&&<MessageBox variant='danger'>{error} </MessageBox>} */}
+                                                {(erroruser)&&<MessageBox variant='danger'>{erroruser} </MessageBox>}
                                                 {success&&<MessageBox>Profile Updated</MessageBox>}
                                         <div className="avaterUploadContainer app__flex">
                                                 <div className={"avatar-wrapper  "}  >
-                                                        <img src={loadinguser?"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS03toaZ810yqxEfpLvHxNrpSllc4CevOTfXC1fnP-QbQ&s":user?.avater} alt="user avater" className="profile-pic" />
-                                                        <div className="upload-button">
-                                                                <i className="fa fa-arrow-circle-up" aria-hidden="true" ></i>
-                                                        </div>
-                                                        <FileBase  className=" upload-button FileBaseUpdate " type="file" multiple={false} onDone={({base64})=>setFormData({...formData,avater:base64})}/>                           {/* work on making this functional */}
+                                                        <img src={`${user.avater}`} alt="user avater" className="profile-pic" />
+                                                       
                                                 </div>
                                                 <div className=" FileBaseUpdate"  >
                                                         <FileBase className=" FileBaseUpdate"  type="file" multiple={false} onDone={({base64})=>setFormData({...formData,avater:base64})}/>                          
