@@ -15,7 +15,7 @@ const ShippingPage = () => {
 
         const [address, setAddress] = useState(shippingAddress?.address)
         const [city, setCity] = useState(shippingAddress?.city)
-        const [postcode, setPostcode] = useState(shippingAddress?.postcode)
+        const [state, setState] = useState(shippingAddress?.state)
         const [country, setCountry] = useState(shippingAddress?.country)
 
         const nav=useNavigate()
@@ -23,7 +23,7 @@ const ShippingPage = () => {
 
         const submithandler=(e)=>{
                 e.preventDefault()
-                dispatch(saveShippingAddress({address,city,postcode,country}))
+                dispatch(saveShippingAddress({address,city,state,country}))
                 nav("/payment")
         }
 
@@ -43,9 +43,9 @@ return (
                                                         <Form.Label>City</Form.Label>
                                                         <Form.Control name="city" type='text' placeholder='City...' value={city} onChange={(e)=>setCity(e.target.value)} required></Form.Control>
                                                 </Form.Group>
-                                                <Form.Group controlId='postcode'  >
-                                                        <Form.Label>Postcode</Form.Label>
-                                                        <Form.Control name="postcode" type='text' placeholder='Postcode...' value={postcode} onChange={(e)=>setPostcode(e.target.value)} required></Form.Control>
+                                                <Form.Group controlId='state'  >
+                                                        <Form.Label>State</Form.Label>
+                                                        <Form.Control name="state" type='text' placeholder='State...' value={state} onChange={(e)=>setState(e.target.value)} required></Form.Control>
                                                 </Form.Group>
                                                 <Form.Group controlId='country'  >
                                                         <Form.Label>Country</Form.Label>

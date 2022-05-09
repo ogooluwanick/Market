@@ -15,6 +15,9 @@ import ShippingPage from './pages/shipping/ShippingPage';
 import PaymentMethod from './pages/paymentMethod/PaymentMethod';
 import PlaceOrder from './pages/placeOrder/PlaceOrder';
 import OrderDetailsPage from './pages/orderDetails/OrderDetailsPage';
+import UserlistPage from './pages/userlistPage/UserlistPage';
+import ErrorPage from './pages/errorPage/ErrorPage';
+import UserEditPage from './pages/userEdit/UserEditPage';
 
 
 
@@ -41,8 +44,11 @@ function App() {
 
                                        <Route path={'/login'}  element={ <Login/>} /> 
                                        <Route path={'/profile'}  element={ <ProfilePage/>} /> 
+                                       <Route path={'/admin/users'}  element={ <UserlistPage/>} /> 
+                                       <Route path={'/admin/user/:id/edit'}  element={ <UserEditPage/>} /> 
 
 
+                                       <Route path="*"  element={<ErrorPage/>}/>
 
 
                                 </Routes>

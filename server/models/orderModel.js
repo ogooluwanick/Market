@@ -15,15 +15,18 @@ const orderSchema= new mongoose.Schema(
         shippingAddress:   { 
                 address:String,
                 city:String,
-                postCode:String,
+                state:String,
                 country:String,
         },
         paymentMethod:  { type: String , required: true},
         paymentResult:    { 
                 id:String,
+                reference:String,
                 status:String,
                 update_time:String,
-                email:String
+                email:String,
+                transaction:String,
+                message:String,
         },
         taxPrice: { type:Number, required:true, default:0.0},
         shippingPrice: { type:Number, required:true, default:0.0},

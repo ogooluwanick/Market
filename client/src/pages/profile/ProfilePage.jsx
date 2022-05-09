@@ -3,8 +3,8 @@ import { Button, Col, Form, InputGroup, Row, Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import FileBase from 'react-file-base64';
-import moment from "moment"
 import { LinkContainer} from 'react-router-bootstrap'
+import moment from "moment"
 
 
 
@@ -38,6 +38,10 @@ const ProfilePage = () => {
         const {orders ,loading:ordersLoading,error:ordersErrors } = useSelector(state=>state.orderMyList)
         const {userInfo } = useSelector(state=>state.userSignin)
         const {success,loading,error } = useSelector(state=>state.userUpdateProfile)
+        const {paySuccess } = useSelector(state=>state.orderPay)
+        console.log("paySuccess",paySuccess)
+        console.log("success",success)
+
         
         const passwordTypControl=()=>{
                 if (passwordType==="password"){
@@ -75,7 +79,7 @@ const ProfilePage = () => {
         useEffect(() => {
                 if (!userInfo) return nav(`/login`)
                 if(userInfo){
-                        if(!user || !user?.name || success){
+                        if(!user || !user?.name || success || paySuccess){
                                 dispatch({type:USER_UPDATE_RESET})
                                 dispatch(detailsUsers("profile"))
                                 dispatch(displayMyOrders())
@@ -91,7 +95,7 @@ const ProfilePage = () => {
                         }
                 } 
                 // eslint-disable-next-line
-              }, [userInfo,nav,user,dispatch,success])
+              }, [userInfo,nav,user,dispatch,success,paySuccess])
   return (
     <Row className={"ProfilepageRow "} >
             <Col md={4} className={"userprofileUpdateForm "} >

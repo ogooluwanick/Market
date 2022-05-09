@@ -146,7 +146,7 @@ const OrderDetailsPage = () => {
                                                         <p><strong>Phone: </strong> <a href={`tel: ${order?.user?.phone}`}>{order?.user?.phone}</a></p>
                                                         <p>
                                                                 <strong>Address: </strong>
-                                                                {order.shippingAddress?.address}, {order.shippingAddress?.city}, {order.shippingAddress?.postcode}, {order.shippingAddress?.country}
+                                                                {order.shippingAddress?.address}, {order.shippingAddress?.city}, {order.shippingAddress?.state}, {order.shippingAddress?.country}
                                                         </p>
                                                         {       order.isDelivered?<MessageBox variant="success">Delivered on: {`${moment(order.DeliveredAt).format('Do [of] MMMM, YYYY [at] h:mma')} `}</MessageBox>:
                                                                 (

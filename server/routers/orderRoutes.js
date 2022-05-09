@@ -8,13 +8,7 @@ const orderRouter= express.Router();
 
 // @desc  create order
 // @route post /orders
-// @access private
-
-
-
-
-
- 
+// @access private 
 orderRouter.post('/',isAuth,expressAsyncHandler(async(req,res)=>{
         const {orderItems,shippingAddress,paymentMethod,itemsPrice,taxPrice,shippingPrice,totalPrice}= req.body
         if (orderItems && orderItems.length ===0){
@@ -52,7 +46,7 @@ orderRouter.get('/myorders',isAuth,expressAsyncHandler(async(req,res)=>{
 // @access private
 orderRouter.get('/:id',isAuth,expressAsyncHandler(async(req,res)=>{
         const {id }= req.params
-        const order= await Order.findById(id).populate("user",  "name email")
+        const order= await Order.findById(id).populate("user",  "name email phone")
         
         if(order){
                 res.json(order);

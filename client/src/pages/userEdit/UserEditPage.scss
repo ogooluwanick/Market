@@ -1,0 +1,133 @@
+.ProfilepageRow{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.adminUpdateUserForm{
+        border-radius: 0 50px 0 50px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+
+        margin: 3vh 0;
+        padding: 1vh 5vh;
+        width: 90vh;
+
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(1px);
+        border: 9px solid rgb(22, 22, 22,.1);
+
+        transition: all .3s ease-in-out !important;
+}
+.userOrdersList{
+        border-radius: 50px 0px 50px 0px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+
+        margin: 3vh 0;
+        padding: 1vh 5vh;
+        width: 100vh;
+
+
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(1px);
+        border: 9px solid rgb(22, 22, 22,.1);
+
+        transition: all .3s ease-in-out !important;
+}
+
+.avaterUploadContainer {
+        flex-direction: column;
+       margin: auto;
+}
+
+.FileBaseUpdate{
+        margin: auto;
+        width: 60%;
+        overflow: hidden;
+}
+
+
+.updateProfileHeaderItem{
+        
+}
+
+.avatar-wrapper{
+	position: relative;
+	height: 150px;
+	width: 150px;
+	margin: 20px auto;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 1px 1px 15px -5px black;
+	transition: all .3s ease;
+
+	&:hover{
+		transform: scale(1.05);
+		cursor: pointer;
+	}
+
+	&:hover .profile-pic{
+		opacity: .5;
+	}
+        
+	.profile-pic {
+                height: 100%;
+		width: 100%;
+                object-fit:"cover";
+		transition: all .3s ease;
+		&:after{
+			font-family: FontAwesome;
+			content: "\f007";
+			top: 0; left: 0;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			font-size: 190px;
+			background: #ecf0f1;
+			color: #34495e;
+			text-align: center;
+		}
+	}
+	.upload-button {
+		position: absolute;
+		top: 0; left: 0;
+		height: 100%;
+		width: 100%;
+                z-index: 100;
+		.fa-arrow-circle-up{
+			position: absolute;
+			font-size: 234px;
+			top: -25px;
+			left: -40px;
+			text-align: center;
+			opacity: 0;
+			transition: all .3s ease;
+			color: #34495e;
+		}
+		&:hover .fa-arrow-circle-up{
+			opacity: .9;
+		}
+	}
+}
+
+
+.table-sm{
+        height: 50vh !important;
+        overflow-y: auto;
+}
+
+.adminEditUser-updateBtn{
+        border-radius: 30px;
+        transition: all 0.3 ease-in-out;
+        height: 6.5vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover,&:active{
+                background-color: var(--lightgray-color);      
+                color:   var(--black-color);            
+                border: 2px solid var(--black-color);      
+         }
+        
+}

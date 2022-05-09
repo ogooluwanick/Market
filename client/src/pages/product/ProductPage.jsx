@@ -31,7 +31,7 @@ const ProductPage = () => {
         const {product,loading ,error  }=useSelector((state)=>state.productDetails)
        
 
-        const imagesModal=  product?.reviews?.map((img)=>({original:img, thumbnail:img    }))   //mapping array from api to local array for modal gallery
+        const imagesModal=  product?.showcaseImgs?.map((img)=>({original:img, thumbnail:img    }))   //mapping array from api to local array for modal gallery
         
 
         const [qty, setQty] = useState(1)
@@ -155,10 +155,7 @@ const ProductPage = () => {
                                                 </Card>
                                         </Col>
 
-                                        <ImgSliderModal
-                                                show={modalShow}
-                                                onHide={() => setModalShow(false)}
-                                        />
+                                        <ImgSliderModal show={modalShow} onHide={() => setModalShow(false)}/>
 
                                 </Row>
                         )

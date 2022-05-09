@@ -48,7 +48,7 @@ export const ordermyListReducer=(state={orders:[]},action)=>{
 export const orderPayReducer = (state = {}, action) => {
         switch (action.type) {
           case ORDER_PAY_REQUEST:
-            return {oading: true}
+            return {loading: true}
           case ORDER_PAY_SUCCESS:
             return {loading: false,success: true }
           case ORDER_PAY_FAIL:
