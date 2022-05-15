@@ -1,13 +1,19 @@
 import React from 'react';
 import "./LoadingBox.css"
 import CircleLoader from "react-spinners/CircleLoader";
+import { disabled } from 'express/lib/application';
 
 
-export default function LoadingBox({size,color}) {
+export default function LoadingBox({size,color,text}) {
   return (
     <div className="loadingBoxComp">
       <CircleLoader color={color}   size={size} className="CircleLoaderSVG" /> 
-      <span className="LoadingText">Loading...</span> 
+      {
+             ( text==="")?
+             <span className="LoadingText" hidden>{text}</span>
+              :
+             <span className="LoadingText">{text}</span>
+        }
     </div>
   );
 }
@@ -15,5 +21,6 @@ export default function LoadingBox({size,color}) {
 
 LoadingBox.defaultProps={
         size:45,
-       color: "#0c8ac1"
+       color: "#0c8ac1",
+       text:"Loading..."
 }

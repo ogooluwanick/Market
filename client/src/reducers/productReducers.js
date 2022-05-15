@@ -1,4 +1,4 @@
-import { PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from "../constants/constants";
+import { DELETE_PRODUCT_FAIL, DELETE_PRODUCT_REQUEST, DELETE_PRODUCT_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS } from "../constants/constants";
 
 
 export const productListReducer=(state={
@@ -30,6 +30,21 @@ export const productDetailsReducer=(state={
                         return {loading: false, product: action.payload};
                 case PRODUCT_DETAILS_FAIL:
                         return {loading: false, error: action.payload};
+                default:
+                        return state;
+
+        }
+
+}
+
+export const adminDeleteProductReducer=(state={ },action)=>{
+        switch (action.type){
+                case   DELETE_PRODUCT_REQUEST :
+                        return {loading:true} 
+                case   DELETE_PRODUCT_SUCCESS:
+                        return {loading:false, success:true}
+                case   DELETE_PRODUCT_FAIL:
+                        return {loading:false,error:action.payload}
                 default:
                         return state;
 

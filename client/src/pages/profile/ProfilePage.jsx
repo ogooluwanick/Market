@@ -131,7 +131,7 @@ const ProfilePage = () => {
                                         <FileBase  className=" upload-button FileBaseUpdate " type="file" multiple={false} onDone={({base64})=>setFormData({...formData,avater:base64})}/>                           {/* work on making this functional */}
                                 </div>
                                 <div className=" FileBaseUpdate"  >
-                                        <FileBase className=" FileBaseUpdate"  type="file" multiple={false} onDone={({base64})=>setFormData({...formData,avater:base64})}/>                          
+                                        <FileBase  className=" FileBaseUpdate"  type="file" multiple={false} onDone={({base64})=>setFormData({...formData,avater:base64})}/>                          
                                 </div>
                         </div>
 

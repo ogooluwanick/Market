@@ -18,6 +18,8 @@ import OrderDetailsPage from './pages/orderDetails/OrderDetailsPage';
 import UserlistPage from './pages/userlistPage/UserlistPage';
 import ErrorPage from './pages/errorPage/ErrorPage';
 import UserEditPage from './pages/userEdit/UserEditPage';
+import ProductlistPage from './pages/productlistPage/ProductlistPage';
+import OrderlistPage from './pages/orderlistPage/OrderlistPage';
 
 
 
@@ -44,8 +46,14 @@ function App() {
 
                                        <Route path={'/login'}  element={ <Login/>} /> 
                                        <Route path={'/profile'}  element={ <ProfilePage/>} /> 
+
                                        <Route path={'/admin/users'}  element={ <UserlistPage/>} /> 
                                        <Route path={'/admin/user/:id/edit'}  element={ <UserEditPage/>} /> 
+
+                                       <Route path={'/admin/products'}  element={ <ProductlistPage/>} /> 
+
+                                       <Route path={'/admin/orders'}  element={ <OrderlistPage/>} /> 
+                                       
 
 
                                        <Route path="*"  element={<ErrorPage/>}/>
