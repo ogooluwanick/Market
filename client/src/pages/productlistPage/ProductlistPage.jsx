@@ -1,14 +1,15 @@
 import React ,{useState, useEffect }from 'react'
 import { Button, Row, Table,Toast ,ToastContainer,Col, Image} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LinkContainer} from 'react-router-bootstrap'
 import moment from "moment"
 
 import "./ProductlistPage.scss"
 import LoadingBox from '../../components/loadingbox/LoadingBox'
 import MessageBox from '../../components/messagebox/MessageBox'
-import { adminDeleteProduct, listProducts } from '../../actions/productActions'
+import { adminCreateProduct, adminDeleteProduct, listProducts } from '../../actions/productActions'
+import { CREATE_PRODUCT_RESET } from '../../constants/constants'
 
 const ProductlistPage = () => {
         const nav=useNavigate()
@@ -19,12 +20,13 @@ const ProductlistPage = () => {
 
         const {loading,products,error} =useSelector(state=>state.productList)
         const {userInfo} =useSelector(state=>state.userSignin)
-        const {success,error:deleteError,loading:deleteLoading} =useSelector(state=>state.adminProductDelete)
+        const {success:deleteSuccess,error:deleteError,loading:deleteLoading} =useSelector(state=>state.adminProductDelete)
+        const {product,error:createError,loading:createLoading} =useSelector(state=>state.adminProductCreate)
 
 
 
-        const createProductHandler=(id)=>{
-                //
+        const createProductHandler=()=>{
+               dispatch(adminCreateProduct(nav))
         }
 
         const productDeleteHandler=(id)=>{
@@ -48,13 +50,14 @@ const ProductlistPage = () => {
                         <strong className="me-auto">Admin {userInfo.name.split(" ")[0]}</strong>
                         <small>{moment(new Date()).fromNow() }</small>
                         </Toast.Header>
-                        <Toast.Body>{success ? "Proudct Deleted":deleteError}</Toast.Body>
+                        <Toast.Body>{deleteSuccess ? "Proudct Deleted":deleteError?deleteError:product?"Product Created"  :createError}</Toast.Body>
                 </Toast>
                 </ToastContainer>
                 )
         }
 
         useEffect(() => {
+                dispatch({type:CREATE_PRODUCT_RESET})
                 if((userInfo && userInfo.isAdmin)){
                         dispatch(listProducts())
                 }
@@ -62,14 +65,14 @@ const ProductlistPage = () => {
                         nav("/login")
                 }
 
-                if(success || deleteError){
+                if(deleteSuccess || deleteError ||product ||createError){
                         setnotification(true)
                         setTimeout(() => {
                                         setnotification(false)
                         }, 8000);
                 }
                
-        }, [dispatch,userInfo,nav,success])
+        }, [dispatch,userInfo,nav,deleteSuccess,deleteError,product,createError])
         
   return (
     <div>
@@ -79,9 +82,13 @@ const ProductlistPage = () => {
                 <Col>
                         <h1>All Products</h1>
                 </Col>
-                <Col className="d-flex justify-content-end">
+                <Col className="d-flex justify-content-end flex-wrap">
                         <Button className='my-3 rounded ' onClick={createProductHandler}>
-                                <i className='fas fa-plus'></i> Create Product
+                                {
+                                        createLoading?<LoadingBox color={"white"} text={""} size="16"/>
+                                        :
+                                        (<span><i className='fas fa-plus'></i> Create Product</span>)
+                                }
                         </Button>
                 </Col>
             </Row>
@@ -108,7 +115,9 @@ const ProductlistPage = () => {
                                                         <tr key={index}>
                                                                 <td>{product._id}</td>
                                                                 <td className='d-flex  align-items-start flex-wrap' style={{height:"100%"}}>
-                                                                        <Image style={{width:"4vw",height:"5vh" , marginRight:"10px"}} src={product.image} alt={product.name} fluid rounded></Image> <span>{product.name}</span>
+                                                                        <Link to={`/products/${product._id}`}  className="app__rm-textDecor">
+                                                                                <Image style={{width:"4vw",height:"5vh" , marginRight:"10px",minWidth:"50px",minHeight:"30px"}} src={product.image} alt={product.name} fluid rounded></Image> <span>{product.name}</span>
+                                                                        </Link>
                                                                 </td>
                                                                 <td>₦{product.price}</td>
                                                                 <td>{product.category}</td>

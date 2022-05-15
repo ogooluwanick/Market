@@ -1,7 +1,6 @@
 import React from 'react';
 import "./LoadingBox.css"
 import CircleLoader from "react-spinners/CircleLoader";
-import { disabled } from 'express/lib/application';
 
 
 export default function LoadingBox({size,color,text}) {

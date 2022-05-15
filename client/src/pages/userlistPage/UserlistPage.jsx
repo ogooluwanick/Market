@@ -1,5 +1,5 @@
 import React ,{useState, useEffect }from 'react'
-import { Button, Table,Toast ,ToastContainer} from 'react-bootstrap'
+import { Button, Image, Table,Toast ,ToastContainer} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { LinkContainer} from 'react-router-bootstrap'
@@ -90,7 +90,9 @@ const UserlistPage = () => {
                                                     users.map((user,index)=>(
                                                         <tr key={index}>
                                                                 <td>{user._id}</td>
-                                                                <td>{user.name}</td>
+                                                                <td className='d-flex  align-items-start flex-wrap' style={{height:"100%"}}>
+                                                                        <Image style={{width:"4vw",height:"5vh" , marginRight:"10px",minWidth:"50px",minHeight:"30px"}} src={user.avater} alt={user.name} fluid rounded></Image> <span>{user.name}</span>
+                                                                </td> 
                                                                 <td><a className='app__rm-textDecor' href={`mailto:${user.email}`}>{user.email}</a></td>
                                                                 <td><a className='app__rm-textDecor' href={`tel:${user.phone}`}>{user.phone}</a></td>
                                                                 <td>{user.isAdmin?

@@ -1,5 +1,4 @@
 .App {
-  background-color: var(--primary-color);
   font-family: var(--font-base);
 }
 
@@ -9,16 +8,30 @@ h1,h2,h3,h4,h5,h6{
 
 main{
         min-height: 100vh;
-        background-color: var(--white-color);
- 
 
         position: relative;
         padding: 12vh 2rem .5rem;
 
-        background: url("./assets/home_whtBG.jpg");
+        // background: url("./assets/home_whtBG.jpg");
+        // background-size: cover;
+        // background-repeat: repeat;
+        // background-position:center;
+}
+
+
+main::before{
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -1;
+        background: var(--primary-color);
+        background-image:  url("./assets/home_whtBG.jpg");
         background-size: cover;
-        background-repeat: repeat;
-        background-position:center;
+        background-repeat: no-repeat;
+        background-position: center;
 }
 
 .app__container {

@@ -20,6 +20,7 @@ import ErrorPage from './pages/errorPage/ErrorPage';
 import UserEditPage from './pages/userEdit/UserEditPage';
 import ProductlistPage from './pages/productlistPage/ProductlistPage';
 import OrderlistPage from './pages/orderlistPage/OrderlistPage';
+import ProductEditPage from './pages/productEdit/ProductEditPage';
 
 
 
@@ -51,6 +52,7 @@ function App() {
                                        <Route path={'/admin/user/:id/edit'}  element={ <UserEditPage/>} /> 
 
                                        <Route path={'/admin/products'}  element={ <ProductlistPage/>} /> 
+                                       <Route path={'/admin/product/:id/edit'}  element={ <ProductEditPage/>} /> 
 
                                        <Route path={'/admin/orders'}  element={ <OrderlistPage/>} /> 
                                        
