@@ -75,14 +75,13 @@ const UserEditPage = () => {
                 </ToastContainer>
                 )
         }
-         console.log(user.avater)
 
         useEffect(() => {
                 if(success){
                         dispatch({type:ADMIN_USER_UPDATE_RESET})
                 }
                 else{
-                        if((!user?.name || user?._id) !== id){
+                        if((!user?.name || user?._id !== id)){
                                 dispatch(detailsUsers(id))
                         }
                         else{
@@ -151,7 +150,7 @@ const UserEditPage = () => {
                                         
                                                         
                                         <div className='d-flex justify-content-center my-3'>
-                                                        <Button className={"adminEditUser-updateBtn"} type="submit" color='primary'   style={{width:"80%"}} >
+                                                        <Button className={"adminEditUser-updateBtn"} type="submit" color='primary' disabled={updateLoading}  style={{width:"80%"}} >
                                                         {
                                                                 updateLoading?
                                                                 <LoadingBox  size={30} style={{backgroundColor:"pink"}}></LoadingBox>

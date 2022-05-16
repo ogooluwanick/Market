@@ -73,12 +73,9 @@ productRouter.put('/:id',isAuth,isAdmin,expressAsyncHandler(async(req,res)=>{
                 product.brand=brand,
                 product.category=category,
                 product.image=image,
-                product.showcaseImgs=showcaseImgs,
+                product.showcaseImgs=[...product.showcaseImgs,showcaseImgs],
                 product.price =price,
-                product.countInStock =countInStock,
-                product.rating =rating,
-                product.reviews= reviews,
-                product.numReviews =numReviews
+                product.countInStock =countInStock
 
                 const updatedProduct=await product.save()
                 res.status(201).json(updatedProduct);
