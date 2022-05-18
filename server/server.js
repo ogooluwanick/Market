@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 import cors from "cors"
 import bodyParser from "body-parser"
 import dotenv from "dotenv"
+import  path  from "path";
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import productRouter from "./routers/productRoutes.js";
 import userRouter from "./routers/userRoutes.js";
 import orderRouter from "./routers/orderRoutes.js";
+import uploadRouter from "./routers/uploadRoutes.js";
 
 
 
@@ -38,8 +40,11 @@ mongoose.connect(process.env.MONGODB_URL)
 app.use('/users',userRouter)
 app.use('/products', productRouter);
 app.use('/orders', orderRouter);
+app.use('/uploads', uploadRouter);
 
 app.get("/api/3rdPartyPayment/paypal", (req,res)=> res.send(process.env.PAYPAL_CLIENT_ID))
+
+
 
 
 
@@ -47,9 +52,11 @@ app.get('/', (req,res)=>{
     res.send('Server is ready')
 });
 
+const __dirname=path.resolve()
+app.use("/uploads",express.static(path.join(__dirname,"/uploads")))
+
 
 app.use(notFound)
-
 app.use(errorHandler)
 
 

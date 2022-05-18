@@ -169,7 +169,7 @@ console.log("showcaseImgs",formData.showcaseImgs)
                                                                         <Image className='m-2' key={index} style={{width:"6h",height:"6vh"  ,minWidth:"50px",minHeight:"50px"}} src={img} alt={`product image roll ${index}`} fluid rounded></Image> 
                                                                 ))
                                                         }
-
+                                
                                                 </div>
                                                 <div className='d-flex  align-content-center justify-content-center my-1 '>
                                                         <FileBase className=" FileBaseUpdate"  multiple={ false } onDone={({base64})=>setFormData({...formData,showcaseImgs:[base64]})}/>                       {/*muiltiple imageupload error   */}
