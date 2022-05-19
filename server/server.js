@@ -4,6 +4,7 @@ import cors from "cors"
 import bodyParser from "body-parser"
 import dotenv from "dotenv"
 import  path  from "path";
+import morgan from "morgan"
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import productRouter from "./routers/productRoutes.js";
@@ -16,6 +17,10 @@ import uploadRouter from "./routers/uploadRoutes.js";
 
 const app=express()
 dotenv.config()
+
+if (process.env.NODE_ENV==="development"){
+        app.use(morgan("dev"))
+}
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))       //increase data limit for file64 data convert

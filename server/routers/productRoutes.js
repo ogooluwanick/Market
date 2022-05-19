@@ -1,4 +1,5 @@
 import express from 'express';
+import { request } from 'express';
 import expressAsyncHandler from "express-async-handler"
 import { isAdmin, isAuth } from '../middleware/authMiddleware.js';
 
@@ -79,6 +80,52 @@ productRouter.put('/:id',isAuth,isAdmin,expressAsyncHandler(async(req,res)=>{
 
                 const updatedProduct=await product.save()
                 res.status(201).json(updatedProduct);
+        }
+        else{
+                res.status(404)
+                throw new Error("Product not found")
+        }        
+}));
+
+// @desc  create new review 
+// @route post /products/:id/reviews
+// @access private
+productRouter.post('/:id/reviews',isAuth,expressAsyncHandler(async(req,res)=>{
+        const {rating,comment} =req.body
+        const {id:_id }= req.params
+
+        const product= await Product.findById(_id)
+
+
+        if(product){
+                const reviewedBefore= product.reviews.find((review)=>review.user.toString()=== req.user._id.toString())
+
+                if (reviewedBefore){
+                        res.status(400)
+                        throw Error("Product Already Reviewed")
+
+                }
+                const review={
+                        name:req.user.name,
+                        rating:Number(rating),
+                        comment:comment,
+                        user:req.user._id,
+                }
+                
+
+                product.reviews.push(review)
+                product.numReviews= product.reviews.length
+
+                product.rating=product.reviews.reduce((item,acc)=>item.rating+acc,0)/product.numReviews
+                product.rating =Number(product.rating)
+                
+                console.log("product",product.rating)
+
+                
+                
+                
+                await product.save()
+                res.status(201).json({message:"review Added"});
         }
         else{
                 res.status(404)
