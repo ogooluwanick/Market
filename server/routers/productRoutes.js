@@ -90,7 +90,7 @@ productRouter.put('/:id',isAuth,isAdmin,expressAsyncHandler(async(req,res)=>{
 
 // @desc  delete single products
 // @route delete /products/:id
-// @access Public
+// @access Public/admin
 productRouter.delete('/:id', isAuth,isAdmin,expressAsyncHandler(async(req,res)=>{
         const {id:_id }= req.params
         const product= await Product.findById(_id)

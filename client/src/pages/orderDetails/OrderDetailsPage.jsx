@@ -2,18 +2,19 @@ import React ,{useState,useEffect}from 'react'
 import axios from "axios"
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import {Card, Col, Image, ListGroup, Row} from 'react-bootstrap'
+import {Button, Card, Col, Image, ListGroup, Row} from 'react-bootstrap'
 import { PayPalButton } from "react-paypal-button-v2";
 import { PaystackButton } from 'react-paystack';
 import moment from "moment"
 
 
 
+
 import "./OrderDetailsPage.scss"
 import MessageBox from '../../components/messagebox/MessageBox'
 import LoadingBox from '../../components/loadingbox/LoadingBox'
-import { byIddetailsOrder, payOrder } from '../../actions/orderActions'
-import { ORDER_PAY_RESET } from '../../constants/constants'
+import { byIddetailsOrder, deliverOrder, payOrder } from '../../actions/orderActions'
+import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from '../../constants/constants'
 
 
 const OrderDetailsPage = () => {
@@ -22,6 +23,7 @@ const OrderDetailsPage = () => {
         const {userInfo}= useSelector(state=>state.userSignin)
         const {loading,order,error}= useSelector(state=>state.orderDetails)
         const {success:successPay,loading:loadingPay}= useSelector(state=>state.orderPay)
+        const {success:successDeliver,loading:loadingDeliver}= useSelector(state=>state.orderDeliver)
 
 
         const nav=useNavigate()
@@ -40,7 +42,6 @@ const OrderDetailsPage = () => {
         }
 
         const paystackSuccessHandler = (paymentResult) => {
-                // Implementation for whatever you want to do with reference and after success call.
                 console.log(paymentResult);
                 dispatch(payOrder(id,paymentResult))
 
@@ -59,6 +60,16 @@ const OrderDetailsPage = () => {
 
         };
 
+        const paidByTransferHandler=()=>{
+                const paymentResult={
+                        staff:userInfo.name,
+                        staffID:userInfo._id,
+                        status:"Success"
+                }
+                console.log("paymentResult",paymentResult)
+                dispatch(payOrder(id,paymentResult))
+        }
+
         const paymentViewFunc=(paymentcode)=> {
                 switch(paymentcode) {
                         case 'Paypal':
@@ -71,17 +82,27 @@ const OrderDetailsPage = () => {
                                         
                         case 'Transfers':
                                 return (
+                                                <div className="">
                                                         <div className="orderDetailsTransferDeets">
-                                                                <div><stron>Acct Name:</stron>Market acct number </div>
-                                                                <div><stron>Acct Number:</stron>1324213243 </div>
-                                                                <div><stron>Bank:</stron>Key Bank </div>
+                                                                <div><stron>Acct Name: </stron>Market acct  </div>
+                                                                <div><stron>Acct Number: </stron>1324213243 </div>
+                                                                <div><stron>Bank: </stron>Key Bank </div>
                                                         </div>
+                                                       {
+                                                                userInfo && userInfo.isAdmin  && !order.isPaid && !order.isDelivered && (order.paymentMethod==="Transfers") &&(
+                                                                        <div className='app__flex my-2'>
+                                                                                <Button type='button' className='btn btn-block' onClick={paidByTransferHandler}>{!loadingDeliver?"Mark as Paid":<LoadingBox size={20} text=""/>}</Button>
+                                                                        </div>
+                                                                )
+                                                        }
+                                                </div>
+
                                         );
                         case 'Paystack':
                                 return (
                                                         <PaystackButton   text= {
                                                                                         <div >
-                                                                                                <svg width="29" height="28" viewBox="0 0 29 28" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.51165 0H25.7369C26.5715 0 27.2504 0.671185 27.2504 1.50214V4.16909C27.2504 4.99651 26.5716 5.67141 25.7369 5.67141H1.51165C0.676996 5.67141 0 4.99657 0 4.16909V1.50214C0 0.671185 0.676996 0 1.51165 0ZM1.51165 14.887H25.7369C26.5715 14.887 27.2504 15.5599 27.2504 16.3874V19.058C27.2504 19.8854 26.5716 20.5566 25.7369 20.5566H1.51165C0.676996 20.5566 0 19.8854 0 19.058V16.3874C0 15.5599 0.676996 14.887 1.51165 14.887ZM15.1376 22.3304H1.51165C0.676996 22.3304 0 23.0016 0 23.8309V26.4997C0 27.3272 0.676996 28 1.51165 28H15.1377C15.9759 28 16.6511 27.3272 16.6511 26.4997V23.8309C16.6511 23.0016 15.9759 22.3304 15.1376 22.3304ZM1.51165 7.44171H27.2504C28.0868 7.44171 28.7619 8.11469 28.7619 8.94379V11.6127C28.7619 12.4401 28.0868 13.1148 27.2504 13.1148H1.51165C0.676996 13.1148 0 12.4401 0 11.6127V8.94379C0 8.11469 0.676996 7.44171 1.51165 7.44171Z" fill="#09A5DB"></path></svg>                                                                                
+                                                                                                <svg width="29" height="28" viewBox="0 0 29 28" fill="none"><path fillRule="evenodd" clipRule="evenodd" d="M1.51165 0H25.7369C26.5715 0 27.2504 0.671185 27.2504 1.50214V4.16909C27.2504 4.99651 26.5716 5.67141 25.7369 5.67141H1.51165C0.676996 5.67141 0 4.99657 0 4.16909V1.50214C0 0.671185 0.676996 0 1.51165 0ZM1.51165 14.887H25.7369C26.5715 14.887 27.2504 15.5599 27.2504 16.3874V19.058C27.2504 19.8854 26.5716 20.5566 25.7369 20.5566H1.51165C0.676996 20.5566 0 19.8854 0 19.058V16.3874C0 15.5599 0.676996 14.887 1.51165 14.887ZM15.1376 22.3304H1.51165C0.676996 22.3304 0 23.0016 0 23.8309V26.4997C0 27.3272 0.676996 28 1.51165 28H15.1377C15.9759 28 16.6511 27.3272 16.6511 26.4997V23.8309C16.6511 23.0016 15.9759 22.3304 15.1376 22.3304ZM1.51165 7.44171H27.2504C28.0868 7.44171 28.7619 8.11469 28.7619 8.94379V11.6127C28.7619 12.4401 28.0868 13.1148 27.2504 13.1148H1.51165C0.676996 13.1148 0 12.4401 0 11.6127V8.94379C0 8.11469 0.676996 7.44171 1.51165 7.44171Z" fill="#09A5DB"></path></svg>                                                                                
                                                                                                 <span>Paystack</span>
                                                                                         </div>
                                                                                 } 
@@ -97,7 +118,9 @@ const OrderDetailsPage = () => {
               }
               
 
-
+              const isDeliveredHandler=()=>{
+                      dispatch(deliverOrder(id))
+              }
 
         useEffect(() => {
                 if (!userInfo) {
@@ -117,8 +140,9 @@ const OrderDetailsPage = () => {
                 }
 
 
-                if(!order || successPay /* || successDeliver*/  || order._id !== id) {
+                if(!order || successPay || successDeliver || order._id !== id) {
                         dispatch({ type: ORDER_PAY_RESET })
+                        dispatch({ type: ORDER_DELIVER_RESET })
                         dispatch(byIddetailsOrder(id))
                 }
                 else if(!order.isPaid){
@@ -129,7 +153,10 @@ const OrderDetailsPage = () => {
                                 setSdkReady(true)
                         }
                 }
-        }, [dispatch,id,order,successPay,userInfo,nav])
+        }, [dispatch,id,order,successPay,successDeliver,userInfo,nav])
+
+
+
         
 
   return loading? <div className="my-3"><LoadingBox></LoadingBox></div> :
@@ -234,6 +261,13 @@ const OrderDetailsPage = () => {
                                                                                                         paymentViewFunc(order.paymentMethod)
                                                                                                 )
                                                                                         }
+                                                                                </ListGroup.Item>
+                                                                        )
+                                                                }
+                                                                {
+                                                                        userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered &&(
+                                                                                <ListGroup.Item className='app__flex'>
+                                                                                        <Button type='button' className='btn btn-block' onClick={isDeliveredHandler}>{!loadingDeliver?"Mark as Delivered":<LoadingBox size={20} text=""/>}</Button>
                                                                                 </ListGroup.Item>
                                                                         )
                                                                 }

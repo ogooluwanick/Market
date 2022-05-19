@@ -40,10 +40,12 @@ mongoose.connect(process.env.MONGODB_URL)
 app.use('/users',userRouter)
 app.use('/products', productRouter);
 app.use('/orders', orderRouter);
-app.use('/uploads', uploadRouter);
 
 app.get("/api/3rdPartyPayment/paypal", (req,res)=> res.send(process.env.PAYPAL_CLIENT_ID))
 
+// app.use('/uploads', uploadRouter);
+// const __dirname=path.resolve()
+// app.use("/uploads",express.static(path.join(__dirname,"/uploads")))
 
 
 
@@ -52,8 +54,7 @@ app.get('/', (req,res)=>{
     res.send('Server is ready')
 });
 
-const __dirname=path.resolve()
-app.use("/uploads",express.static(path.join(__dirname,"/uploads")))
+
 
 
 app.use(notFound)

@@ -1,7 +1,7 @@
 import express from 'express';
 import expressAsyncHandler from "express-async-handler"
 
-import { isAuth } from '../middleware/authMiddleware.js';
+import { isAdmin, isAuth } from '../middleware/authMiddleware.js';
 import Order from "../models/orderModel.js"
 
 const orderRouter= express.Router();
@@ -39,6 +39,22 @@ orderRouter.get('/myorders',isAuth,expressAsyncHandler(async(req,res)=>{
         }   
 
 }))
+
+// @desc  return all orders admin
+// @route get /orders/allorders
+// @access private/admin
+orderRouter.get('/allorders',isAuth,isAdmin,expressAsyncHandler(async(req,res)=>{
+        const orders= await Order.find({}).populate("user",  "_id name ")
+        if(orders){
+                res.json(orders);
+        }
+        else{
+                res.status(404)
+                throw new Error("No Orders yet Found!")
+        }   
+
+}))
+
 
 
 // @desc  get single order by ID
@@ -88,8 +104,30 @@ orderRouter.put('/:id/pay',isAuth,expressAsyncHandler(async(req,res)=>{
                         }
                 }
                 else{
-                        console.log("fix later for transfers")
+                        order.paymentResult= {                                                                          //data being sent in from paystack
+                                staff:paymentData.staff,  
+                                staffID:paymentData.staffID,  
+                                status:paymentData.status,   
+                        }
+
+                const updatedOrder=await order.save()
+                res.json(updatedOrder);
                 }
+        }
+        else{
+                res.status(404)
+                throw new Error("Order Not Found!")
+        }        
+}));
+// @desc  update order to delivered  by ID
+// @route get /orders/:id/deliver
+// @access private
+orderRouter.put('/:id/deliver',isAuth,isAdmin,expressAsyncHandler(async(req,res)=>{
+        const {id}= req.params
+        const order= await Order.findById(String(id))
+        if(order){
+                order.isDelivered= true
+                order.deliveredAt= Date.now()
 
                 const updatedOrder=await order.save()
                 res.json(updatedOrder);

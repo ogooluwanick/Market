@@ -28,6 +28,7 @@ const initialState= {
 
 const ProductEditPage = () => {
         const [formData, setFormData] = useState(initialState)
+        
 
         const dispatch=useDispatch()
         const {id}= useParams()
@@ -43,6 +44,24 @@ const ProductEditPage = () => {
         const handleChange=(e)=>{
                         setFormData({...formData, [e.target.name]: [e.target.value]})                
         }
+
+        // const uploadImgHandler=async(e)=>{
+        //         const file=e.target.files
+        //         const formData= new FormData()
+        //         formData.append("image",file)
+                
+        //         try {
+        //                 const config={
+        //                         header:{"Content-Type":"multipart/form-data"}
+        //                 }
+
+        //                 const {data}=await axios.post("/upload",formData,config)
+        //                 setFormData({...formData, "showcaseImgs":data })
+
+        //         } catch (error) {
+                        
+        //         }
+        // }
 
 
         const submitHandler=(e)=>{
@@ -100,7 +119,7 @@ console.log("showcaseImgs",formData.showcaseImgs)
                                         "brand": [productDetails.brand],
                                         "category":[productDetails.category],
                                         "image":[productDetails.image],
-                                        "showcaseImgs": productDetails.showcaseImgs,
+                                        // "showcaseImgs": productDetails.showcaseImgs,
                                         "price": [productDetails.price],
                                         "countInStock":[productDetails.countInStock]
                                        
@@ -172,7 +191,8 @@ console.log("showcaseImgs",formData.showcaseImgs)
                                 
                                                 </div>
                                                 <div className='d-flex  align-content-center justify-content-center my-1 '>
-                                                        <FileBase className=" FileBaseUpdate"  multiple={ false } onDone={({base64})=>setFormData({...formData,showcaseImgs:[base64]})}/>                       {/*muiltiple imageupload error   */}
+                                                        <FileBase className=" FileBaseUpdate "  multiple={ false } onDone={({base64})=>setFormData({...formData,showcaseImgs:base64})}/>                     {/*   muiltiple imageupload error  */}
+                                                        {/* <Form.Control id="img-file" type="file" lable="Chose Image"  onChange={uploadImgHandler}/> */}
                                                 </div>
 
                                         </div>

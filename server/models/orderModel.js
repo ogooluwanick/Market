@@ -27,6 +27,8 @@ const orderSchema= new mongoose.Schema(
                 email:String,
                 transaction:String,
                 message:String,
+                staff:String,
+                staffID:String
         },
         taxPrice: { type:Number, required:true, default:0.0},
         shippingPrice: { type:Number, required:true, default:0.0},
