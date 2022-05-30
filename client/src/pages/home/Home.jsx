@@ -1,6 +1,7 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux';
 
 
@@ -9,16 +10,18 @@ import Products from '../../components/products/Products'
 import { listProducts } from '../../actions/productActions';
 import LoadingBox from '../../components/loadingbox/LoadingBox';
 import MessageBox from '../../components/messagebox/MessageBox';
+import Paginate from '../../components/paginate/Paginate';
 
 
 
 const Home = () => {
         const dispatch=useDispatch()
-        const  {products,loading,error} = useSelector((state)=>state.productList);
+        const {keyword,pageNumber} =useParams()
+        const  {products,page, pages,loading,error} = useSelector((state)=>state.productList);
         
         useEffect(() => {
-                dispatch(listProducts())
-        }, [dispatch] )
+                dispatch(listProducts(keyword,(pageNumber||1)))
+        }, [dispatch,keyword,pageNumber] )
         
   return (
     <div className='app__home'>
@@ -29,6 +32,7 @@ const Home = () => {
                     error? <MessageBox variant='danger'>{error}</MessageBox>
                         :
                         (
+                                <>
                                 <Row>
                                 {
                                         products?.map((product, index)=>(
@@ -40,6 +44,8 @@ const Home = () => {
 
                                 }
                                 </Row>
+                                <Paginate page={page}  pages={pages} keyword={keyword ?  keyword : ""}/>
+                                </>
                         )
             }
     </div>

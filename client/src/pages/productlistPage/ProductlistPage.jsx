@@ -1,7 +1,7 @@
 import React ,{useState, useEffect }from 'react'
 import { Button, Row, Table,Toast ,ToastContainer,Col, Image} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { LinkContainer} from 'react-router-bootstrap'
 import moment from "moment"
 
@@ -10,15 +10,17 @@ import LoadingBox from '../../components/loadingbox/LoadingBox'
 import MessageBox from '../../components/messagebox/MessageBox'
 import { adminCreateProduct, adminDeleteProduct, listProducts } from '../../actions/productActions'
 import { CREATE_PRODUCT_RESET } from '../../constants/constants'
+import Paginate from '../../components/paginate/Paginate'
 
 const ProductlistPage = () => {
+        const  {pageNumber} =useParams()
         const nav=useNavigate()
         const dispatch=useDispatch()
 
         const [notification, setnotification] = useState(false);
         const toggleNotification = () => setnotification((notification)=>!notification);
 
-        const {loading,products,error} =useSelector(state=>state.productList)
+        const {loading,products,error,page,pages} =useSelector(state=>state.productList)
         const {userInfo} =useSelector(state=>state.userSignin)
         const {success:deleteSuccess,error:deleteError,loading:deleteLoading} =useSelector(state=>state.adminProductDelete)
         const {product,error:createError,loading:createLoading} =useSelector(state=>state.adminProductCreate)
@@ -59,7 +61,7 @@ const ProductlistPage = () => {
         useEffect(() => {
                 dispatch({type:CREATE_PRODUCT_RESET})
                 if((userInfo && userInfo.isAdmin)){
-                        dispatch(listProducts())
+                        dispatch(listProducts( "",(pageNumber||1)))
                 }
                 else{
                         nav("/login")
@@ -72,7 +74,7 @@ const ProductlistPage = () => {
                         }, 8000);
                 }
                
-        }, [dispatch,userInfo,nav,deleteSuccess,deleteError,product,createError])
+        }, [dispatch,userInfo,nav,deleteSuccess,deleteError,product,createError,pageNumber])
         
   return (
     <div>
@@ -99,6 +101,7 @@ const ProductlistPage = () => {
                     error?<MessageBox variant="danger">{error}</MessageBox>
                     :
                     (
+                    <>
                             <Table striped bordered hover responsive className='table-sm'>
                                     <thead>
                                             <tr>
@@ -140,7 +143,10 @@ const ProductlistPage = () => {
                                                     ))
                                             }
                                     </tbody>
+                                    
                             </Table>
+                        <Paginate page={page} pages={pages} isAdmin={true}/>
+                    </>
                     )
             }
 

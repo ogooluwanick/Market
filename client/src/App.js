@@ -36,6 +36,10 @@ function App() {
                                        <Route path='/' element={ <Home/>} exact/> 
                                        <Route path='/products/:id' element={ <ProductPage/>}/> 
 
+                                       <Route path='/page/:pageNumber' element={ <Home/>} /> 
+                                       <Route path='/search/:keyword' element={ <Home/>} /> 
+                                       <Route path='/search/:keyword/page/:pageNumber' element={ <Home/>} /> 
+
                                        <Route path={'/cart/'}  element={ <CartPage/>} /> 
                                        <Route path={'/cart/:id'}  element={ <CartPage/>} /> 
                                        <Route path={'/shipping'}  element={ <ShippingPage/>} /> 
@@ -52,6 +56,7 @@ function App() {
                                        <Route path={'/admin/user/:id/edit'}  element={ <UserEditPage/>} /> 
 
                                        <Route path={'/admin/products'}  element={ <ProductlistPage/>} /> 
+                                       <Route path={'/admin/products/:pageNumber'}  element={ <ProductlistPage/>} /> 
                                        <Route path={'/admin/product/:id/edit'}  element={ <ProductEditPage/>} /> 
 
                                        <Route path={'/admin/orders'}  element={ <OrderlistPage/>} /> 

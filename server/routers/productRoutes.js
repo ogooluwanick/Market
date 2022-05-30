@@ -12,9 +12,21 @@ const productRouter= express.Router();
 // @route get /products
 // @access Public
 productRouter.get('/',expressAsyncHandler(async(req,res)=>{
-        const products= await Product.find({})
+        const pageSize=10
+        const page=Number(req.query.pageNumber) || 1
+        const  keyword =req.query.keyword? {
+                name:{
+                                $regex:req.query.keyword,
+                                $options:"i"
+                }
+        } :
+        {}
         
-        res.json(products);
+        const count=await Product.countDocuments({...keyword})
+        const products= await Product.find({...keyword}).limit(pageSize).skip(pageSize*(page -1))
+        const pages=Math.ceil(count/pageSize)
+        
+        res.json({products,page,pages});
  }));
 
 
@@ -92,6 +104,7 @@ productRouter.put('/:id',isAuth,isAdmin,expressAsyncHandler(async(req,res)=>{
 // @access private
 productRouter.post('/:id/reviews',isAuth,expressAsyncHandler(async(req,res)=>{
         const {rating,comment} =req.body
+        console.log("req.body",req.body)
         const {id:_id }= req.params
 
         const product= await Product.findById(_id)
@@ -116,15 +129,18 @@ productRouter.post('/:id/reviews',isAuth,expressAsyncHandler(async(req,res)=>{
                 product.reviews.push(review)
                 product.numReviews= product.reviews.length
 
-                product.rating=product.reviews.reduce((item,acc)=>item.rating+acc,0)/product.numReviews
+                product.rating=product.reviews.reduce((item,acc)=>item.rating+acc,0)/product.numReviews                                 //problem with the reduce function updating the rating avg value fix in testing
+                console.log("rating1",product.rating)
                 product.rating =Number(product.rating)
                 
-                console.log("product",product.rating)
+                
+                console.log("rating2",product.rating)
 
                 
                 
                 
                 await product.save()
+                console.log("product",product)
                 res.status(201).json({message:"review Added"});
         }
         else{

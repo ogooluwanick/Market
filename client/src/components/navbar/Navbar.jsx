@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import "./Navbar.scss"
 import images from '../../constants/images'
 import { signoutUsers } from '../../actions/userActions'
+import Searchbox from '../searchbox/Searchbox';
 
 
 function NavBar() {
@@ -34,6 +35,7 @@ function NavBar() {
                         </LinkContainer>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav" >
+                                <Searchbox />
                                 <Nav className=" app__navbar-links ">
                                         <LinkContainer to="/cart">
                                                 <Nav.Link href="/cart">
