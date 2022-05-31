@@ -12,6 +12,7 @@ node_modules/
 
 # production
 /build
+/client/build
 
 # hiddenFiles
 /server/seeder.js
