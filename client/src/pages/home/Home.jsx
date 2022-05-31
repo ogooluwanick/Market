@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux';
 
 
@@ -12,6 +12,7 @@ import LoadingBox from '../../components/loadingbox/LoadingBox';
 import MessageBox from '../../components/messagebox/MessageBox';
 import Paginate from '../../components/paginate/Paginate';
 import ProductCarousel from '../../components/carousel/ProductCarousel';
+import Meta from '../../components/metaTags/Meta';
 
 
 
@@ -25,8 +26,13 @@ const Home = () => {
         }, [dispatch,keyword,pageNumber] )
         
   return (
-    <div className='app__home'>
-            {!keyword && <ProductCarousel/>}
+    <div className='app__home '>
+            <Meta />
+            {
+                !keyword ? <ProductCarousel />
+                :
+                <Link to={"/"} className="btn btn-outline-primary my-3 rounded"><i className="fa-solid fa-arrow-left"/>    Go Back</Link>
+            }
             <h1>Latest Products</h1>
             {
                     loading? <LoadingBox/>

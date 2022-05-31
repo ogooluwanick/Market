@@ -15,6 +15,7 @@ import LoadingBox from '../../components/loadingbox/LoadingBox';
 import MessageBox from '../../components/messagebox/MessageBox';
 import moment from 'moment';
 import { PRODUCT_REVIEW_RESET } from '../../constants/constants';
+import Meta from '../../components/metaTags/Meta';
 
 
 
@@ -89,6 +90,7 @@ const ProductPage = () => {
 console.log(product?.rating, product?.numReviews)
   return (
     <div className='app__ProductPage'>
+
             <Link to={"/"} className="btn btn-outline-primary my-3 rounded"><i className="fa-solid fa-arrow-left"/>    Go Back</Link>
                 {
                         loading?<LoadingBox/>
@@ -97,6 +99,7 @@ console.log(product?.rating, product?.numReviews)
                         :
                         (
                                 <>
+                                <Meta title={product.name} metaImg={product.image}/>
                                 <Row>
                                         <Col md={6}>
                                                 <Image src={product?.image} alt={product?.name} fluid  className='app__ProductPage-Img rounded' onClick={()=>setModalShow(true)}/>  

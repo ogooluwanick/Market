@@ -55,10 +55,21 @@ app.get("/api/3rdPartyPayment/paypal", (req,res)=> res.send(process.env.PAYPAL_C
 
 
 
-app.get('/', (req,res)=>{
-    res.send('Server is ready')
-});
 
+const __dirname = path.resolve()
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/client/build')))
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  )
+} else {
+        app.get('/', (req,res)=>{
+        res.send('Server is ready')
+  })
+}
 
 
 

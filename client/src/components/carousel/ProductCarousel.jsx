@@ -23,7 +23,7 @@ const ProductCarousel = () => {
         }, [dispatch])
 
   return (
-                loading?<LoadingBox/>:
+                loading?<div className='my-5'><LoadingBox /></div>:
                 error?<MessageBox variant="danger">{error}</MessageBox>:
                 (
                         <Carousel pause="hover" className="bg-dark">
