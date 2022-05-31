@@ -1,0 +1,12 @@
+
+.searchBtn{
+        @media screen and (max-width:990px) {
+                
+                background-color: var(   --primary-color);
+        }
+}
+
+.searchIcon{
+        fill:var(  --secondary-color) ;
+        
+}

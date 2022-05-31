@@ -11,6 +11,7 @@ import { listProducts } from '../../actions/productActions';
 import LoadingBox from '../../components/loadingbox/LoadingBox';
 import MessageBox from '../../components/messagebox/MessageBox';
 import Paginate from '../../components/paginate/Paginate';
+import ProductCarousel from '../../components/carousel/ProductCarousel';
 
 
 
@@ -25,6 +26,7 @@ const Home = () => {
         
   return (
     <div className='app__home'>
+            {!keyword && <ProductCarousel/>}
             <h1>Latest Products</h1>
             {
                     loading? <LoadingBox/>

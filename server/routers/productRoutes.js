@@ -29,6 +29,15 @@ productRouter.get('/',expressAsyncHandler(async(req,res)=>{
         res.json({products,page,pages});
  }));
 
+ // @desc  Get top rated products
+// @route get /products/top
+// @access Public
+productRouter.get('/top',expressAsyncHandler(async(req,res)=>{
+        const products=await Product.find({}).sort({rating:-1}).limit(3)
+        
+        res.json(products)
+ }));
+
 
 
 // @desc  fetch single products
