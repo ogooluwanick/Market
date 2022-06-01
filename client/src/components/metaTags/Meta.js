@@ -20,6 +20,6 @@ Meta.defaultProps={
         title:"Market | Welcome",
         desc:"Find the best products with the best prices!",
         keywords:"ogooluwa,olutimilehin,ogooluwa olutimilehin,Ecommerce,MERN,Webdev,Market,Fullstack,Products",
-        metaImg:"https://www.byeindonesia.com/og-bye-indonesia.png"
+        metaImg:"https://cdn.sanity.io/images/ru024jea/production/f65dcb8088629faa066c0b849d20dc33d323d79b-2876x1576.png"
 }
 export default Meta
