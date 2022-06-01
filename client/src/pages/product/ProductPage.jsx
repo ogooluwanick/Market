@@ -99,7 +99,7 @@ console.log(product?.rating, product?.numReviews)
                         :
                         (
                                 <>
-                                <Meta title={product.name} metaImg={product.image}/>
+                                <Meta title={`Market | ${product.name}`} metaImg={product.image}/>
                                 <Row>
                                         <Col md={6}>
                                                 <Image src={product?.image} alt={product?.name} fluid  className='app__ProductPage-Img rounded' onClick={()=>setModalShow(true)}/>  
