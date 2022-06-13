@@ -84,12 +84,15 @@ const ProductPage = () => {
                 }
           dispatch(detailsProduct(productsID))
           window.scrollTo(0, 0)
+          
 
         }, [dispatch,productsID,success])
         
-console.log(product?.rating, product?.numReviews)
+        
+
   return (
     <div className='app__ProductPage'>
+           
 
             <Link to={"/"} className="btn btn-outline-primary my-3 rounded"><i className="fa-solid fa-arrow-left"/>    Go Back</Link>
                 {
@@ -100,6 +103,7 @@ console.log(product?.rating, product?.numReviews)
                         (
                                 <>
                                 <Meta title={`Market | ${product.name}`} metaImg={product.image}/>
+
                                 <Row>
                                         <Col md={6}>
                                                 <Image src={product?.image} alt={product?.name} fluid  className='app__ProductPage-Img rounded' onClick={()=>setModalShow(true)}/>  
