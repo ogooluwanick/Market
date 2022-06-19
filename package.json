@@ -4,8 +4,13 @@
   "version": "1.0.0",
   "description": "Ecommerce",
   "main": "server.js",
+  "engines": {
+        "node": "16.x",
+        "npm": "6.x"
+      },
   "scripts": {
     "start": "node server/server.js",
+    "build": "webpack",
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently  \" npm run server \"  \"npm run client\" ",
@@ -25,7 +30,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
     "morgan": "^1.10.0",
-    "multer": "^1.4.4",
+    "multer": "^1.4.5-lts.1",
     "react-router": "^6.3.0"
   },
   "devDependencies": {
