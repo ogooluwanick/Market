@@ -1,14 +1,13 @@
 import  axios  from "axios";
 import { ADMIN_USER_UPDATE_FAIL, ADMIN_USER_UPDATE_REQUEST, ADMIN_USER_UPDATE_SUCCESS, DELETE_USER_FAIL, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, ORDER_MY_LIST_REQUEST, USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_RESET, USER_DETAILS_SUCCESS, USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_RESET, USER_LIST_SUCCESS, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_SIGNIN_FAIL, USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS } from "../constants/constants";
 
-const baseURL="marketapphog.herokuapp.com/api"
 
 export const signinUsers=(formData,nav, redirect)=>async(dispatch)=>{
         dispatch({type:USER_SIGNIN_REQUEST})
         try {
             const config= {headers:{"Content-Type":"application/json"}}      
 
-            const {data} = await axios.post(`${baseURL}/users/login`,formData,config) 
+            const {data} = await axios.post(`/api/users/login`,formData,config) 
             dispatch({type:USER_SIGNIN_SUCCESS, payload: data})
 
              localStorage.setItem("userInfo",JSON.stringify(data))
@@ -31,7 +30,7 @@ export const signupUsers=(formData,nav, redirect)=> async(dispatch)=>{
         try{
                 const config= {headers:{"Content-Type":"application/json"}}      
 
-                const {data} = await axios.post(`${baseURL}/users/register`,formData,config)  
+                const {data} = await axios.post(`/api/users/register`,formData,config)  
                 dispatch({type: USER_REGISTER_SUCCESS, payload: data});
                 dispatch({type:USER_SIGNIN_SUCCESS, payload: data})
         
@@ -55,7 +54,7 @@ export const detailsUsers=(id)=> async(dispatch,getState)=>{
                         headers:{Authorization:`Bearer ${userInfo.token}`}
                 }      
 
-                const {data} = await axios.get(`${baseURL}/users/${id}`,config)  
+                const {data} = await axios.get(`/api/users/${id}`,config)  
                 dispatch({type: USER_DETAILS_SUCCESS, payload: data});
         }
         catch(error){
@@ -75,7 +74,7 @@ export const adminListUsers=()=> async(dispatch,getState)=>{
                         headers:{Authorization:`Bearer ${userInfo.token}`}
                 }      
 
-                const {data} = await axios.get(`${baseURL}/users/listusers`,config)  
+                const {data} = await axios.get(`/api/users/listusers`,config)  
                 dispatch({type: USER_LIST_SUCCESS, payload: data});
         }
         catch(error){
@@ -96,7 +95,7 @@ export const adminDeleteUser=(id)=> async(dispatch,getState)=>{
                         headers:{Authorization:`Bearer ${userInfo.token}`}
                 }      
 
-                const {data} = await axios.delete(`${baseURL}/users/${id}`,config)  
+                const {data} = await axios.delete(`/api/users/${id}`,config)  
                 dispatch({type: DELETE_USER_SUCCESS});
                 dispatch({type: USER_DETAILS_SUCCESS, payload: data});
         }
@@ -118,7 +117,7 @@ export const adminUpdateProfileUsers=(user,id)=> async(dispatch,getState)=>{
                         headers:{Authorization:`Bearer ${userInfo.token}`}
                 }      
 
-                const {data} = await axios.put(`${baseURL}/users/updateuser/${id}`,user,config)  
+                const {data} = await axios.put(`/api/users/updateuser/${id}`,user,config)  
                 dispatch({type: ADMIN_USER_UPDATE_SUCCESS, payload: data});
         }
         catch(error){
@@ -139,7 +138,7 @@ export const updateProfileUsers=(user)=> async(dispatch,getState)=>{
                         headers:{Authorization:`Bearer ${userInfo.token}`}
                 }      
 
-                const {data} = await axios.put(`${baseURL}/users/updateprofile`,user,config)  
+                const {data} = await axios.put(`/api/users/updateprofile`,user,config)  
                 dispatch({type: USER_UPDATE_SUCCESS, payload: data});
                 dispatch({type:USER_SIGNIN_SUCCESS, payload: data})
 
