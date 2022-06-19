@@ -1,5 +1,6 @@
 {
   "name": "market",
+  "proxy":"http://localhost:3005",
   "type": "module",
   "version": "1.0.0",
   "description": "Ecommerce",
